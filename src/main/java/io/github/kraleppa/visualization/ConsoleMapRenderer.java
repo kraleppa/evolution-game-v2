@@ -1,7 +1,7 @@
 package io.github.kraleppa.visualization;
 
 import io.github.kraleppa.map.Field;
-import io.github.kraleppa.map.SimulationMap;
+import io.github.kraleppa.map.WorldMap;
 import io.github.kraleppa.util.Vector2D;
 import lombok.AllArgsConstructor;
 
@@ -11,7 +11,7 @@ public class ConsoleMapRenderer {
     private static final String FRAME_SEGMENT = "-";
     private static final String CELL_SEGMENT = "|";
 
-    private final SimulationMap simulationMap;
+    private final WorldMap worldMap;
 
     private String drawFrame(boolean innerSegment) {
         if (innerSegment) {
@@ -22,8 +22,8 @@ public class ConsoleMapRenderer {
     }
 
     private String drawObject(Vector2D currentPosition) {
-        Field field = simulationMap.getField(currentPosition);
-        return field.getEntities().size() == 0 ? EMPTY_CELL : String.valueOf(field.getEntities().size());
+        Field field = worldMap.getField(currentPosition);
+        return field.getAnimals().size() == 0 ? EMPTY_CELL : String.valueOf(field.getAnimals().size());
     }
 
     private String drawHeader(Vector2D lowerLeft, Vector2D upperRight) {
@@ -59,6 +59,6 @@ public class ConsoleMapRenderer {
     }
 
     public String draw(){
-        return draw(new Vector2D(0, 0), simulationMap.upperRight.subtract(new Vector2D(1, 1)));
+        return draw(new Vector2D(0, 0), worldMap.upperRight.subtract(new Vector2D(1, 1)));
     }
 }

@@ -1,36 +1,40 @@
 package io.github.kraleppa.map;
 
 import io.github.kraleppa.entities.Animal;
-import io.github.kraleppa.entities.Entity;
-import io.github.kraleppa.entities.Grass;
-import io.github.kraleppa.util.Vector2D;
-import lombok.EqualsAndHashCode;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class Field {
     private final Set<Animal> animals = new HashSet<>();
-    private final Set<Grass> grasses = new HashSet<>();
+    private boolean isGrassed = false;
 
-    public void addEntity(Entity entity){
-        if (entity instanceof Animal){
-            animals.add((Animal) entity);
-        } else if (entity instanceof Grass){
-            grasses.add((Grass) entity);
-        }
+    public void addAnimal(Animal animal){
+        this.animals.add(animal);
     }
 
-    public void removeEntity(Entity entity){
-        if (entity instanceof Animal){
-            animals.remove(entity);
-        } else if (entity instanceof Grass){
-            grasses.remove(entity);
-        }
+    public void removeAnimal(Animal animal){
+        this.animals.remove(animal);
     }
 
-    public Set<Entity> getEntities() {
-        return new HashSet<>() {{ addAll(animals); addAll(grasses); }};
+    public Collection<Animal> getAnimals(){
+        return animals;
+    }
+
+    public boolean isGrassed() {
+        return isGrassed;
+    }
+
+    public void addGrass(){
+        if (isGrassed){
+            throw new IllegalStateException("Field is already grassed!");
+        }
+        isGrassed = true;
+    }
+
+    public void removeGrass(){
+        if (!isGrassed){
+            throw new IllegalStateException("Field is not currently grassed!");
+        }
+        isGrassed = false;
     }
 }

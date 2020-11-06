@@ -120,9 +120,4 @@ public class Vector2DTest {
         //then
         Assertions.assertEquals(new Vector2D(1,-1), result);
     }
-
-
-
-
-
 }

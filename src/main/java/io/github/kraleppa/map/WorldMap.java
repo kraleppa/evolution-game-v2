@@ -1,17 +1,21 @@
 package io.github.kraleppa.map;
 
-import io.github.kraleppa.entities.Entity;
+import io.github.kraleppa.entities.Animal;
+import io.github.kraleppa.managers.GrowthManager;
 import io.github.kraleppa.util.Vector2D;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SimulationMap {
+public class WorldMap {
     private final Map<Vector2D, Field> fields = new HashMap<>();
     public final Vector2D upperRight;
+    private final GrowthManager growthManager;
 
-    public SimulationMap(Vector2D upperRight) {
+    public WorldMap(Vector2D upperRight, GrowthManager growthManager) {
         this.upperRight = upperRight;
+        this.growthManager = growthManager;
 
         for (int x = 0; x < upperRight.x; x++){
             for (int y = 0; y < upperRight.y; y++){
@@ -25,22 +29,26 @@ public class SimulationMap {
         return fields.get(position);
     }
 
+    public Collection<Field> getFields() {
+        return fields.values();
+    }
+
     public boolean isPositionLegal(Vector2D position){
         return position.precedes(upperRight) && position.follows(new Vector2D(-1, -1));
     }
 
-    public void placeEntity(Entity entity){
-        if (!isPositionLegal(entity.position)){
+    public void placeAnimal(Animal animal){
+        if (!isPositionLegal(animal.position)){
             throw new IllegalArgumentException("Wrong entity position!");
         }
-        entity.setMap(this);
-        getField(entity.position).addEntity(entity);
+        animal.bindMap(this);
+        fields.get(animal.position).addAnimal(animal);
     }
 
-    public void removeEntity(Entity entity){
-        if (!isPositionLegal(entity.position)){
+    public void removeAnimal(Animal animal){
+        if (!isPositionLegal(animal.position)){
             throw new IllegalArgumentException("Wrong entity position!");
         }
-        getField(entity.position).removeEntity(entity);
+        fields.get(animal.position).removeAnimal(animal);
     }
 }
