@@ -4,6 +4,8 @@ import io.github.kraleppa.map.WorldMap;
 import io.github.kraleppa.util.Direction;
 import io.github.kraleppa.util.Vector2D;
 
+import java.util.Random;
+
 public class Animal implements Comparable<Animal>{
     public Vector2D position;
     public Direction direction;
@@ -39,6 +41,7 @@ public class Animal implements Comparable<Animal>{
             map.removeAnimal(this);
             position = newPosition;
             map.placeAnimal(this);
+            energy -= energyCost;
         }
 
         return true;
@@ -52,6 +55,7 @@ public class Animal implements Comparable<Animal>{
 
     public void turnAroundAuto(){
         //TODO
+        turnAround(new Random().nextInt(10));
     }
 
     public void eat(int energy, int maximumEnergy){
