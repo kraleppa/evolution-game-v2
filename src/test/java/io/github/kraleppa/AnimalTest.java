@@ -70,6 +70,24 @@ public class AnimalTest {
     }
 
     @Test
+    public void moveTest5(){
+        //given
+        SimulationMap simulationMap = new SimulationMap(new Vector2D(2, 2));
+        Vector2D animalPosition = new Vector2D(0, 0);
+        Animal animal = new Animal(animalPosition, Direction.NE);
+
+        simulationMap.placeEntity(animal);
+
+        //when
+        animal.move();
+
+        //then
+        Assertions.assertEquals(new Vector2D(1, 1), animal.position);
+        Assertions.assertEquals(1, simulationMap.getField(animal.position).getEntities().size());
+        Assertions.assertEquals(0, simulationMap.getField(animalPosition).getEntities().size());
+    }
+
+    @Test
     public void turnAroundTest1(){
         //given
         Animal animal = new Animal(new Vector2D(3, 3), Direction.N);
@@ -92,4 +110,6 @@ public class AnimalTest {
         //then
         Assertions.assertEquals(Direction.NE, animal.direction);
     }
+
+
 }
