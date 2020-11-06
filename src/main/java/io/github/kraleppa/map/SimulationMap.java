@@ -37,13 +37,10 @@ public class SimulationMap {
         getField(entity.position).addEntity(entity);
     }
 
-    public void moveEntity(Entity entity, Vector2D to){
-        if (!isPositionLegal(to)){
-            throw new IllegalArgumentException("Wrong movement position!");
+    public void removeEntity(Entity entity){
+        if (!isPositionLegal(entity.position)){
+            throw new IllegalArgumentException("Wrong entity position!");
         }
         getField(entity.position).removeEntity(entity);
-        getField(to).addEntity(entity);
     }
-
-
 }

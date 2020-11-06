@@ -21,8 +21,9 @@ public class Animal extends Entity{
         }
         Vector2D newPosition = position.add(direction.toVector2D());
         if (map.isPositionLegal(newPosition)){
-            map.moveEntity(this, newPosition);
+            map.removeEntity(this);
             position = newPosition;
+            map.placeEntity(this);
         }
     }
 
