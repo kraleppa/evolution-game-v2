@@ -9,7 +9,7 @@ public class FieldTest {
     @Test
     public void addAnimalTest(){
         //given
-        Field field = new Field();
+        Field field = new Field(new Vector2D(0, 0));
         Animal animal = new Animal(new Vector2D(0, 0));
 
         //when
@@ -23,7 +23,7 @@ public class FieldTest {
     @Test
     public void removeAnimalTest(){
         //given
-        Field field = new Field();
+        Field field = new Field(new Vector2D(0, 0));
         Animal animal1 = new Animal(new Vector2D(0, 0));
         Animal animal2 = new Animal(new Vector2D(0, 0));
 

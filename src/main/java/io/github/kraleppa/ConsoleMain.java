@@ -7,7 +7,8 @@ import io.github.kraleppa.visualization.ConsoleMapRenderer;
 
 public class ConsoleMain {
     public static void main(String[] args) {
-        WorldMap worldMap = new WorldMap(new Vector2D(2, 2), null);
+        GrowthManager growthManager = new GrowthManager(new Vector2D(3, 3), new Vector2D(7,7));
+        WorldMap worldMap = new WorldMap(new Vector2D(3, 3), growthManager);
         ConsoleMapRenderer consoleMapRenderer = new ConsoleMapRenderer(worldMap);
 
         Animal animal = new Animal(new Vector2D(1, 1));
@@ -22,6 +23,8 @@ public class ConsoleMain {
         System.out.println(consoleMapRenderer.draw());
         animal1.move(0);
         System.out.println(consoleMapRenderer.draw());
+        growthManager.plantInJungle();
+        growthManager.plantInSteppe();
 
 
     }

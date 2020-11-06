@@ -20,13 +20,11 @@ public class WorldMap {
         for (int x = 0; x < upperRight.x; x++){
             for (int y = 0; y < upperRight.y; y++){
                 Vector2D vector2D = new Vector2D(x, y);
-                fields.put(vector2D, new Field());
+                fields.put(vector2D, new Field(vector2D));
             }
         }
-    }
 
-    public WorldMap(Vector2D upperRight) {
-        this(upperRight, null);
+        growthManager.addFields(fields.values());
     }
 
     public Field getField(Vector2D position) {
@@ -46,13 +44,17 @@ public class WorldMap {
             throw new IllegalArgumentException("Wrong entity position!");
         }
         animal.bindMap(this);
-        fields.get(animal.position).addAnimal(animal);
+        Field field = fields.get(animal.position);
+        field.addAnimal(animal);
+        growthManager.removeFromEmpty(field);
     }
 
     public void removeAnimal(Animal animal){
         if (!isPositionLegal(animal.position)){
             throw new IllegalArgumentException("Wrong entity position!");
         }
-        fields.get(animal.position).removeAnimal(animal);
+        Field field = fields.get(animal.position);
+        field.removeAnimal(animal);
+        growthManager.addIfEmpty(field);
     }
 }

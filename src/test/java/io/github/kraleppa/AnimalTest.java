@@ -1,5 +1,6 @@
 package io.github.kraleppa;
 import io.github.kraleppa.entities.Animal;
+import io.github.kraleppa.managers.GrowthManager;
 import io.github.kraleppa.map.WorldMap;
 import io.github.kraleppa.util.Direction;
 import io.github.kraleppa.util.Vector2D;
@@ -10,7 +11,7 @@ public class AnimalTest {
     @Test
     public void moveTest1(){
         //given
-        WorldMap worldMap = new WorldMap(new Vector2D(2, 2));
+        WorldMap worldMap = new WorldMap(new Vector2D(2, 2), new GrowthManager(new Vector2D(0, 0), new Vector2D(0, 0)));
         Vector2D animalPosition = new Vector2D(0, 0);
         Animal animal = new Animal(animalPosition, Direction.N);
 
@@ -29,7 +30,7 @@ public class AnimalTest {
     @Test
     public void moveTest2(){
         //given
-        WorldMap worldMap = new WorldMap(new Vector2D(2, 2));
+        WorldMap worldMap = new WorldMap(new Vector2D(2, 2), new GrowthManager(new Vector2D(0, 0), new Vector2D(0, 0)));
         Vector2D animalPosition = new Vector2D(1, 1);
         Animal animal = new Animal(animalPosition, Direction.N);
 
@@ -47,7 +48,7 @@ public class AnimalTest {
     @Test
     public void moveTest3(){
         //given
-        WorldMap worldMap = new WorldMap(new Vector2D(2, 2));
+        WorldMap worldMap = new WorldMap(new Vector2D(2, 2), new GrowthManager(new Vector2D(0, 0), new Vector2D(0, 0)));
         Vector2D animalPosition = new Vector2D(0, 0);
         Animal animal = new Animal(animalPosition, Direction.SW);
 
@@ -75,7 +76,7 @@ public class AnimalTest {
     @Test
     public void moveTest5(){
         //given
-        WorldMap worldMap = new WorldMap(new Vector2D(2, 2));
+        WorldMap worldMap =  new WorldMap(new Vector2D(2, 2), new GrowthManager(new Vector2D(0, 0), new Vector2D(0, 0)));
         Vector2D animalPosition = new Vector2D(1, 1);
         Animal animal = new Animal(animalPosition, Direction.N);
 
