@@ -5,6 +5,8 @@ import io.github.kraleppa.map.WorldMap;
 import io.github.kraleppa.util.Vector2D;
 import lombok.AllArgsConstructor;
 
+import java.util.EmptyStackException;
+
 @AllArgsConstructor
 public class ConsoleMapRenderer {
     private static final String EMPTY_CELL = " ";
@@ -22,8 +24,12 @@ public class ConsoleMapRenderer {
     }
 
     private String drawObject(Vector2D currentPosition) {
+        String result = EMPTY_CELL;
         Field field = worldMap.getField(currentPosition);
-        return field.getAnimals().size() == 0 ? EMPTY_CELL : String.valueOf(field.getAnimals().size());
+        if (field.isGrassed()){
+            result = "*";
+        }
+        return field.getAnimals().size() == 0 ? result : String.valueOf(field.getAnimals().size());
     }
 
     private String drawHeader(Vector2D lowerLeft, Vector2D upperRight) {

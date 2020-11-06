@@ -25,6 +25,7 @@ public class ConsoleMain {
         System.out.println(consoleMapRenderer.draw());
         growthManager.plantInJungle();
         growthManager.plantInSteppe();
+        System.out.println(consoleMapRenderer.draw());
 
 
     }
