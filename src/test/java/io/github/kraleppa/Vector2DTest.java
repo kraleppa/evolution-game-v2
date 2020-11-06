@@ -22,7 +22,7 @@ public class Vector2DTest {
     public void precedesTest2(){
         //given
         Vector2D vector1 = new Vector2D(1,1);
-        Vector2D vector2 = new Vector2D(0, 1);
+        Vector2D vector2 = new Vector2D(0, 0);
 
         //when
         boolean result = vector2.precedes(vector1);
@@ -35,7 +35,7 @@ public class Vector2DTest {
     public void followsTest1(){
         //given
         Vector2D vector1 = new Vector2D(1,1);
-        Vector2D vector2 = new Vector2D(0, 1);
+        Vector2D vector2 = new Vector2D(0, 0);
 
         //when
         boolean result = vector1.follows(vector2);
