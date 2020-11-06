@@ -4,7 +4,7 @@ import io.github.kraleppa.util.Direction;
 import io.github.kraleppa.util.Vector2D;
 
 public class Animal extends Entity{
-    private Direction direction;
+    public Direction direction;
 
     public Animal(Vector2D position, Direction direction) {
         super(position);
@@ -24,6 +24,12 @@ public class Animal extends Entity{
             map.removeEntity(this);
             position = newPosition;
             map.placeEntity(this);
+        }
+    }
+
+    public void turnAround(int n){
+        for (int i = 0; i < n; i++){
+            direction = direction.next();
         }
     }
 

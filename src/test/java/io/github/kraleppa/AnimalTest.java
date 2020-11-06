@@ -68,4 +68,28 @@ public class AnimalTest {
         //when then
         Assertions.assertThrows(IllegalStateException.class, animal::move);
     }
+
+    @Test
+    public void turnAroundTest1(){
+        //given
+        Animal animal = new Animal(new Vector2D(3, 3), Direction.N);
+
+        //when
+        animal.turnAround(3);
+
+        //then
+        Assertions.assertEquals(Direction.SE, animal.direction);
+    }
+
+    @Test
+    public void turnAroundTest2(){
+        //given
+        Animal animal = new Animal(new Vector2D(3, 3), Direction.N);
+
+        //when
+        animal.turnAround(9);
+
+        //then
+        Assertions.assertEquals(Direction.NE, animal.direction);
+    }
 }
