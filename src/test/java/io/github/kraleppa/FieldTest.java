@@ -10,7 +10,7 @@ public class FieldTest {
     @Test
     public void addEntityTest(){
         //given
-        Field field = new Field(new Vector2D(0, 0));
+        Field field = new Field();
         Entity entity = new Animal(new Vector2D(0, 0));
 
         //when
@@ -23,7 +23,7 @@ public class FieldTest {
     @Test
     public void removeEntityTest(){
         //given
-        Field field = new Field(new Vector2D(0, 0));
+        Field field = new Field();
         Entity entity1 = new Animal(new Vector2D(0, 0));
         Entity entity2 = new Animal(new Vector2D(0, 0));
 

@@ -1,18 +1,30 @@
 package io.github.kraleppa.entities;
 
+import io.github.kraleppa.util.Direction;
 import io.github.kraleppa.util.Vector2D;
 
 public class Animal extends Entity{
-    public Animal(Vector2D position) {
+    private Direction direction;
+
+    public Animal(Vector2D position, Direction direction) {
         super(position);
+        this.direction = direction;
     }
 
-    public Animal() {
-        this(new Vector2D(0, 0));
+    public Animal(Vector2D position) {
+        this(position, Direction.N);
     }
 
-    @Override
-    public String toString() {
-        return "#";
+    public void move(){
+        if (map == null){
+            throw new IllegalStateException("Cannot move animal which isn't on the map!");
+        }
+        Vector2D newPosition = position.add(direction.toVector2D());
+        if (map.isPositionLegal(newPosition)){
+            map.moveEntity(this, newPosition);
+            position = newPosition;
+        }
     }
+
+
 }

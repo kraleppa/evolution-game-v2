@@ -8,16 +8,8 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-@EqualsAndHashCode
 public class Field {
-    private final Vector2D position;
-
-    @EqualsAndHashCode.Exclude
     private final Set<Entity> entities = new HashSet<>();
-
-    public Field(Vector2D position) {
-        this.position = position;
-    }
 
     public void addEntity(Entity entity){
         entities.add(entity);
