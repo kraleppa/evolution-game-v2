@@ -1,5 +1,7 @@
 package io.github.kraleppa.map;
 
+import io.github.kraleppa.entities.Animal;
+import io.github.kraleppa.entities.Entity;
 import io.github.kraleppa.util.Vector2D;
 
 import java.util.HashMap;
@@ -22,5 +24,12 @@ public class SimulationMap {
 
     public Field getField(Vector2D position) {
         return fields.get(position);
+    }
+
+    public void putEntity(Entity entity){
+        if (!entity.position.precedes(upperRight)){
+            throw new IllegalArgumentException("Wrong entity position!");
+        }
+        fields.get(entity.position).addEntity(entity);
     }
 }
