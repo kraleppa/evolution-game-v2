@@ -1,6 +1,6 @@
 package io.github.kraleppa.map;
 
-import io.github.kraleppa.entities.Animal;
+import io.github.kraleppa.animal.Animal;
 import io.github.kraleppa.util.Vector2D;
 
 import java.util.*;

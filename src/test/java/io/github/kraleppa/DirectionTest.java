@@ -1,5 +1,5 @@
 package io.github.kraleppa;
-import io.github.kraleppa.util.Direction;
+import io.github.kraleppa.animal.Direction;
 import io.github.kraleppa.util.Vector2D;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;

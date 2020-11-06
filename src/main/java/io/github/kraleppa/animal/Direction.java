@@ -1,4 +1,6 @@
-package io.github.kraleppa.util;
+package io.github.kraleppa.animal;
+
+import io.github.kraleppa.util.Vector2D;
 
 public enum Direction {
     N,

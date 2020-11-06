@@ -1,7 +1,6 @@
 package io.github.kraleppa.managers;
 
-import io.github.kraleppa.entities.Animal;
-import io.github.kraleppa.map.Field;
+import io.github.kraleppa.animal.Animal;
 import io.github.kraleppa.map.WorldMap;
 
 import java.util.HashSet;

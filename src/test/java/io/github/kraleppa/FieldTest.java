@@ -1,5 +1,5 @@
 package io.github.kraleppa;
-import io.github.kraleppa.entities.Animal;
+import io.github.kraleppa.animal.Animal;
 import io.github.kraleppa.map.Field;
 import io.github.kraleppa.util.Vector2D;
 import org.junit.jupiter.api.Test;

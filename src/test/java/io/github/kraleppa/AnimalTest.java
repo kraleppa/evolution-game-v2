@@ -1,8 +1,8 @@
 package io.github.kraleppa;
-import io.github.kraleppa.entities.Animal;
+import io.github.kraleppa.animal.Animal;
 import io.github.kraleppa.managers.GrowthManager;
 import io.github.kraleppa.map.WorldMap;
-import io.github.kraleppa.util.Direction;
+import io.github.kraleppa.animal.Direction;
 import io.github.kraleppa.util.Vector2D;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;

@@ -1,4 +1,4 @@
-package io.github.kraleppa.entities;
+package io.github.kraleppa.animal;
 
 public class Genotype {
     public final String genotype;

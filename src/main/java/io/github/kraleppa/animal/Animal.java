@@ -1,7 +1,6 @@
-package io.github.kraleppa.entities;
+package io.github.kraleppa.animal;
 
 import io.github.kraleppa.map.WorldMap;
-import io.github.kraleppa.util.Direction;
 import io.github.kraleppa.util.Vector2D;
 
 import java.util.Random;
