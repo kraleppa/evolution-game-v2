@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class SimulationMap {
     private final Map<Vector2D, Field> fields = new HashMap<>();
-    private final Vector2D upperRight;
+    public final Vector2D upperRight;
 
     public SimulationMap(Vector2D upperRight) {
         this.upperRight = upperRight;
@@ -18,5 +18,9 @@ public class SimulationMap {
                 fields.put(vector2D, new Field(vector2D));
             }
         }
+    }
+
+    public Field getField(Vector2D position) {
+        return fields.get(position);
     }
 }
