@@ -25,6 +25,10 @@ public class WorldMap {
         }
     }
 
+    public WorldMap(Vector2D upperRight) {
+        this(upperRight, null);
+    }
+
     public Field getField(Vector2D position) {
         return fields.get(position);
     }
