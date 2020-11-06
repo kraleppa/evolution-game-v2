@@ -5,10 +5,16 @@ import io.github.kraleppa.util.Vector2D;
 
 public class Animal extends Entity{
     public Direction direction;
+    private int healthPoints;
 
-    public Animal(Vector2D position, Direction direction) {
+    public Animal(Vector2D position, Direction direction, int healthPoints) {
         super(position);
         this.direction = direction;
+        this.healthPoints = healthPoints;
+    }
+
+    public Animal(Vector2D position, Direction direction) {
+        this(position, direction, 10);
     }
 
     public Animal(Vector2D position) {
