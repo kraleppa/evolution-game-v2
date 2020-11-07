@@ -58,12 +58,16 @@ public class Animal implements Comparable<Animal>{
     }
 
     public void eat(int energy, int maximumEnergy){
-        //TODO
+        if (this.energy + energy > maximumEnergy){
+            this.energy = maximumEnergy;
+        } else {
+            this.energy += energy;
+        }
     }
 
     @Override
     public int compareTo(Animal other) {
-        return Integer.compare(this.energy, other.energy);
+        return Integer.compare(other.energy, this.energy);
     }
 
     public void bindMap(WorldMap map) {

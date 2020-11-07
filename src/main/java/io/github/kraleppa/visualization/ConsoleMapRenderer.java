@@ -29,6 +29,9 @@ public class ConsoleMapRenderer {
         if (field.isGrassed()){
             result = "*";
         }
+        if (field.isGrassed() && field.getAnimals().size() != 0){
+            return  "#";
+        }
         return field.getAnimals().size() == 0 ? result : String.valueOf(field.getAnimals().size());
     }
 

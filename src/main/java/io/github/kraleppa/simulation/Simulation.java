@@ -1,6 +1,7 @@
 package io.github.kraleppa.simulation;
 
 import io.github.kraleppa.animal.Animal;
+import io.github.kraleppa.managers.EatingManager;
 import io.github.kraleppa.managers.GrowthManager;
 import io.github.kraleppa.managers.MovementManager;
 import io.github.kraleppa.map.WorldMap;
@@ -16,6 +17,7 @@ public class Simulation {
     private final GrowthManager growthManager = new GrowthManager(jungleLowerLeft, jungleUpperRight);
     private final WorldMap map = new WorldMap(upperRight, growthManager);
     private final MovementManager movementManager = new MovementManager(map, 1);
+    private final EatingManager eatingManager = new EatingManager(map, 1, 20);
     private final Random random = new Random();
     private int day = 0;
 
@@ -23,6 +25,7 @@ public class Simulation {
 
     private void simulateOneDay(){
         movementManager.performMovement();
+        eatingManager.performEating();
         growthManager.plantInSteppe();
         growthManager.plantInJungle();
         day++;
@@ -31,7 +34,7 @@ public class Simulation {
     }
 
     public void simulate(int days) throws InterruptedException {
-        prepareSimulation(2);
+        prepareSimulation(1000);
         System.out.println("Day: 0");
         System.out.println(consoleMapRenderer.draw());
         for (int i = 0; i < days; i++){
