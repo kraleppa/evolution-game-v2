@@ -2,7 +2,6 @@ package io.github.kraleppa.simulation;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
 import io.github.kraleppa.animal.Animal;
 import io.github.kraleppa.json.JSON;
 import io.github.kraleppa.managers.EatingManager;
@@ -12,6 +11,7 @@ import io.github.kraleppa.map.WorldMap;
 import io.github.kraleppa.util.Vector2D;
 import io.github.kraleppa.visualization.ConsoleMapRenderer;
 
+import java.io.PrintWriter;
 import java.util.Random;
 
 public class Simulation {
@@ -24,9 +24,17 @@ public class Simulation {
     private final EatingManager eatingManager = new EatingManager(map, 1, 20);
     private final Random random = new Random();
     private final Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+    private PrintWriter out;
     private int day = 0;
 
     private final ConsoleMapRenderer consoleMapRenderer = new ConsoleMapRenderer(map);
+
+    public Simulation(PrintWriter out) {
+        this.out = out;
+    }
+
+    public Simulation() {
+    }
 
     private void simulateOneDay(){
         movementManager.performMovement();
@@ -34,18 +42,29 @@ public class Simulation {
         growthManager.plantInSteppe();
         growthManager.plantInJungle();
         day++;
-        System.out.println("Day: " + day);
-        System.out.println(consoleMapRenderer.draw());
+        if (out != null){
+            out.println(parseToJson());
+        } else {
+            System.out.println("Day: " + day);
+            System.out.println(consoleMapRenderer.draw());
+        }
     }
 
-    public void simulate(int days) throws InterruptedException {
-        prepareSimulation(1);
-        System.out.println("Day: 0");
-        System.out.println(consoleMapRenderer.draw());
+    public void simulate(int days, int animalsNumber) throws InterruptedException {
+        prepareSimulation(animalsNumber);
+        if (out != null){
+            out.println(parseToJson());
+        } else {
+            System.out.println("Day: " + day);
+            System.out.println(consoleMapRenderer.draw());
+        }
+        Thread.sleep(100);
         for (int i = 0; i < days; i++){
             simulateOneDay();
             Thread.sleep(100);
         }
+
+
     }
 
     private void prepareSimulation(int animalsNumber){
