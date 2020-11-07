@@ -1,6 +1,10 @@
 package io.github.kraleppa.simulation;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
 import io.github.kraleppa.animal.Animal;
+import io.github.kraleppa.json.JSON;
 import io.github.kraleppa.managers.EatingManager;
 import io.github.kraleppa.managers.GrowthManager;
 import io.github.kraleppa.managers.MovementManager;
@@ -19,6 +23,7 @@ public class Simulation {
     private final MovementManager movementManager = new MovementManager(map, 1);
     private final EatingManager eatingManager = new EatingManager(map, 1, 20);
     private final Random random = new Random();
+    private final Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
     private int day = 0;
 
     private final ConsoleMapRenderer consoleMapRenderer = new ConsoleMapRenderer(map);
@@ -34,7 +39,7 @@ public class Simulation {
     }
 
     public void simulate(int days) throws InterruptedException {
-        prepareSimulation(1000);
+        prepareSimulation(1);
         System.out.println("Day: 0");
         System.out.println(consoleMapRenderer.draw());
         for (int i = 0; i < days; i++){
@@ -47,5 +52,10 @@ public class Simulation {
         for (int i = 0; i < animalsNumber; i++){
             map.placeAnimal(new Animal(new Vector2D(random.nextInt(map.upperRight.x), random.nextInt(map.upperRight.y))));
         }
+    }
+
+    public String parseToJson(){
+        JSON json = new JSON(map.getFields(), day);
+        return gson.toJson(json);
     }
 }

@@ -1,12 +1,15 @@
 package io.github.kraleppa.util;
 
+import com.google.gson.annotations.Expose;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 
 @AllArgsConstructor
 @EqualsAndHashCode
 public class Vector2D {
+    @Expose
     final public int x;
+    @Expose
     final public int y;
 
     public boolean precedes(Vector2D other){

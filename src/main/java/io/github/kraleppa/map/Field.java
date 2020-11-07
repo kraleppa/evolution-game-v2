@@ -1,13 +1,17 @@
 package io.github.kraleppa.map;
 
+import com.google.gson.annotations.Expose;
 import io.github.kraleppa.animal.Animal;
 import io.github.kraleppa.util.Vector2D;
 
 import java.util.*;
 
 public class Field {
+    @Expose
     private final Set<Animal> animals = new HashSet<>();
+    @Expose
     private boolean isGrassed = false;
+    @Expose
     public final Vector2D vector2D;
 
     public Field(Vector2D vector2D) {

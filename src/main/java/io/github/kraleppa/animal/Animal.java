@@ -1,14 +1,18 @@
 package io.github.kraleppa.animal;
 
+import com.google.gson.annotations.Expose;
 import io.github.kraleppa.map.WorldMap;
 import io.github.kraleppa.util.Vector2D;
 
 import java.util.Random;
 
 public class Animal implements Comparable<Animal>{
+    @Expose
     public Vector2D position;
+    @Expose
     public Direction direction;
     private final Genotype genotype;
+    @Expose
     private int energy;
     private WorldMap map;
 
