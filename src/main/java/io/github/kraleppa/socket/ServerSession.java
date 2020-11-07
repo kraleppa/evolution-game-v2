@@ -1,5 +1,6 @@
 package io.github.kraleppa.socket;
 
+import com.google.gson.Gson;
 import io.github.kraleppa.simulation.Simulation;
 
 import java.io.BufferedReader;
@@ -13,6 +14,7 @@ public class ServerSession extends Thread{
     private final PrintWriter out;
     private final BufferedReader in;
     private final Simulation simulation;
+    private final Gson gson = new Gson();
 
     public ServerSession(Socket clientSocket) throws IOException {
         this.clientSocket = clientSocket;
@@ -25,11 +27,16 @@ public class ServerSession extends Thread{
     public void run() {
         super.run();
         try {
-            simulation.simulate(10, 10);
+            String settings = in.readLine();
+            Settings settingsObject = gson.fromJson(settings, Settings.class);
+
+            System.out.println();
+            simulation.simulate(settingsObject.days, settingsObject.animals);
             out.println("Finished");
             in.close();
             out.close();
             clientSocket.close();
+            sleep(10);
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
