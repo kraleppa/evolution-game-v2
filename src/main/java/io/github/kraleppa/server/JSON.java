@@ -1,4 +1,4 @@
-package io.github.kraleppa.json;
+package io.github.kraleppa.server;
 
 import com.google.gson.annotations.Expose;
 import io.github.kraleppa.map.Field;
