@@ -9,9 +9,11 @@ import io.github.kraleppa.managers.EatingManager;
 import io.github.kraleppa.managers.GrowthManager;
 import io.github.kraleppa.managers.MovementManager;
 import io.github.kraleppa.map.WorldMap;
+import io.github.kraleppa.server.Settings;
 import io.github.kraleppa.util.Vector2D;
 
 import java.util.Random;
+import java.util.Set;
 
 public class Simulation extends Thread {
     private final Random random = new Random();
@@ -28,26 +30,17 @@ public class Simulation extends Thread {
     private final int days;
 
 
-    public Simulation(Buffer buffer,
-                      int days,
-                      int animalsNumber,
-                      Vector2D upperRight,
-                      Vector2D jungleLowerLeft,
-                      Vector2D jungleUpperRight) {
-        this.growthManager = new GrowthManager(jungleLowerLeft, jungleUpperRight);
-        this.map = new WorldMap(upperRight, growthManager);
+    public Simulation(Buffer buffer, Settings settings) {
+        this.growthManager = new GrowthManager(settings.jungleLowerLeft, settings.jungleUpperRight);
+        this.map = new WorldMap(settings.upperRight, growthManager);
         this.movementManager = new MovementManager(map, 1);
         this.eatingManager = new EatingManager(map, 20, 20);
         this.buffer = buffer;
-        this.days = days;
+        this.days = settings.days;
 
-        for (int i = 0; i < animalsNumber; i++){
+        for (int i = 0; i < settings.animalsNumber; i++){
             map.placeAnimal(new Animal(new Vector2D(random.nextInt(map.upperRight.x), random.nextInt(map.upperRight.y))));
         }
-    }
-
-    public Simulation(Buffer buffer, int days, int animalsNumber){
-        this(buffer, days, animalsNumber, new Vector2D(40, 40), new Vector2D(14, 14), new Vector2D(26, 26));
     }
 
     private void simulateOneDay(){

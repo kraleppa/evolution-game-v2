@@ -8,10 +8,10 @@ public class Sender extends Thread {
     private final WebSocket webSocket;
     private final Buffer buffer;
 
-    public Sender(WebSocket webSocket, int days, int animalsNumber) {
+    public Sender(WebSocket webSocket, Settings settings) {
         this.webSocket = webSocket;
         this.buffer = new Buffer();
-        new Simulation(buffer, days, animalsNumber).start();
+        new Simulation(buffer, settings).start();
     }
 
     @SneakyThrows
@@ -24,7 +24,6 @@ public class Sender extends Thread {
             if (s == null){
                 break;
             }
-            System.out.println(buffer);
             webSocket.send(s);
             try {
                 Thread.sleep(80);

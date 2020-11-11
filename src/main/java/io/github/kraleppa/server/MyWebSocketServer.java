@@ -1,5 +1,6 @@
 package io.github.kraleppa.server;
 
+import com.google.gson.Gson;
 import io.github.kraleppa.simulation.Simulation;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
@@ -12,6 +13,7 @@ import java.util.Set;
 public class MyWebSocketServer extends WebSocketServer {
     private final static int TCP_PORT = 8081;
     private final Set<WebSocket> sockets = new HashSet<>();
+    private final Gson gson = new Gson();
 
     public MyWebSocketServer() {
         super(new InetSocketAddress(TCP_PORT));;
@@ -21,7 +23,6 @@ public class MyWebSocketServer extends WebSocketServer {
     public void onOpen(WebSocket webSocket, ClientHandshake clientHandshake) {
         sockets.add(webSocket);
         System.out.println("New connection from " + webSocket.getRemoteSocketAddress().getAddress().getHostAddress());
-        new Sender(webSocket, 100, 100).start();
     }
 
     @Override
@@ -33,9 +34,9 @@ public class MyWebSocketServer extends WebSocketServer {
     @Override
     public void onMessage(WebSocket webSocket, String message) {
         System.out.println("Message from client: " + message);
-        for (WebSocket sock : sockets) {
-            sock.send(message);
-        }
+        Settings settings = gson.fromJson(message, Settings.class);
+        new Sender(webSocket, settings).start();
+        System.out.println(sockets.size());
     }
 
     @Override
