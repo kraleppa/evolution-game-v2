@@ -24,6 +24,7 @@ public class Sender extends Thread {
             if (s == null){
                 break;
             }
+            System.out.println(s);
             webSocket.send(s);
             try {
                 Thread.sleep(80);

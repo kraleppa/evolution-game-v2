@@ -13,6 +13,8 @@ public class Field {
     private boolean isGrassed = false;
     @Expose
     public final Vector2D vector2D;
+    @Expose
+    public boolean isInJungle;
 
     public Field(Vector2D vector2D) {
         this.vector2D = vector2D;

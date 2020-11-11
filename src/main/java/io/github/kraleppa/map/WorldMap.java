@@ -20,7 +20,9 @@ public class WorldMap {
         for (int x = 0; x < upperRight.x; x++){
             for (int y = 0; y < upperRight.y; y++){
                 Vector2D vector2D = new Vector2D(x, y);
-                fields.put(vector2D, new Field(vector2D));
+                Field field = new Field(vector2D);
+                field.isInJungle = growthManager.isFieldInJungle(field);
+                fields.put(vector2D, field);
             }
         }
 
