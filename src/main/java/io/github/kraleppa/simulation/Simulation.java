@@ -10,31 +10,44 @@ import io.github.kraleppa.managers.GrowthManager;
 import io.github.kraleppa.managers.MovementManager;
 import io.github.kraleppa.map.WorldMap;
 import io.github.kraleppa.util.Vector2D;
-import io.github.kraleppa.visualization.ConsoleMapRenderer;
 
-import lombok.SneakyThrows;
-import org.java_websocket.WebSocket;
-
-import java.util.List;
 import java.util.Random;
 
 public class Simulation extends Thread {
-    private final Vector2D upperRight = new Vector2D(40, 40);
-    private final Vector2D jungleLowerLeft = new Vector2D(2, 2);
-    private final Vector2D jungleUpperRight = new Vector2D(7, 7);
-    private final GrowthManager growthManager = new GrowthManager(jungleLowerLeft, jungleUpperRight);
-    private final WorldMap map = new WorldMap(upperRight, growthManager);
-    private final MovementManager movementManager = new MovementManager(map, 1);
-    private final EatingManager eatingManager = new EatingManager(map, 20, 20);
     private final Random random = new Random();
     private final Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-    private int day = 0;
+
+    private final GrowthManager growthManager;
+    private final WorldMap map;
+    private final MovementManager movementManager;
+    private final EatingManager eatingManager;
+
     private final Buffer buffer;
+    private int day = 0;
 
-    private final ConsoleMapRenderer consoleMapRenderer = new ConsoleMapRenderer(map);
+    private final int days;
 
-    public Simulation(Buffer buffer) {
+
+    public Simulation(Buffer buffer,
+                      int days,
+                      int animalsNumber,
+                      Vector2D upperRight,
+                      Vector2D jungleLowerLeft,
+                      Vector2D jungleUpperRight) {
+        this.growthManager = new GrowthManager(jungleLowerLeft, jungleUpperRight);
+        this.map = new WorldMap(upperRight, growthManager);
+        this.movementManager = new MovementManager(map, 1);
+        this.eatingManager = new EatingManager(map, 20, 20);
         this.buffer = buffer;
+        this.days = days;
+
+        for (int i = 0; i < animalsNumber; i++){
+            map.placeAnimal(new Animal(new Vector2D(random.nextInt(map.upperRight.x), random.nextInt(map.upperRight.y))));
+        }
+    }
+
+    public Simulation(Buffer buffer, int days, int animalsNumber){
+        this(buffer, days, animalsNumber, new Vector2D(40, 40), new Vector2D(14, 14), new Vector2D(26, 26));
     }
 
     private void simulateOneDay(){
@@ -50,10 +63,10 @@ public class Simulation extends Thread {
     @Override
     public void run() {
         super.run();
-        simulate(100, 1000);
+        simulate(1000);
     }
 
-    public void simulate(int days, int animalsNumber) {
+    public void simulate(int animalsNumber) {
         prepareSimulation(animalsNumber);
         buffer.add(parseToJson());
         for (int i = 0; i < days; i++){

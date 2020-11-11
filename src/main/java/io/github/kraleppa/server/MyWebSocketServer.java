@@ -6,9 +6,7 @@ import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
 
 import java.net.InetSocketAddress;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class MyWebSocketServer extends WebSocketServer {
@@ -23,30 +21,7 @@ public class MyWebSocketServer extends WebSocketServer {
     public void onOpen(WebSocket webSocket, ClientHandshake clientHandshake) {
         sockets.add(webSocket);
         System.out.println("New connection from " + webSocket.getRemoteSocketAddress().getAddress().getHostAddress());
-        Buffer buffer = new Buffer();
-        try {
-            new Simulation(buffer).start();
-            Thread.sleep(100);
-            Thread thread = new Thread(() -> {
-                while(true){
-                    String s = buffer.getFirst();
-                    if (s == null){
-                        break;
-                    }
-                    System.out.println(buffer);
-                    webSocket.send(s);
-                    try {
-                        Thread.sleep(80);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-                webSocket.close();
-            });
-            thread.start();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        new Sender(webSocket, 100, 100).start();
     }
 
     @Override
