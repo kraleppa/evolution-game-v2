@@ -3,6 +3,8 @@ package io.github.kraleppa.simulation;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import io.github.kraleppa.animal.Animal;
+import io.github.kraleppa.animal.Direction;
+import io.github.kraleppa.managers.ProcreationManager;
 import io.github.kraleppa.server.Buffer;
 import io.github.kraleppa.server.JSON;
 import io.github.kraleppa.managers.EatingManager;
@@ -23,6 +25,7 @@ public class Simulation extends Thread {
     private final WorldMap map;
     private final MovementManager movementManager;
     private final EatingManager eatingManager;
+    private final ProcreationManager procreationManager;
 
     private final Buffer buffer;
     private int day = 0;
@@ -33,13 +36,17 @@ public class Simulation extends Thread {
     public Simulation(Buffer buffer, Settings settings) {
         this.growthManager = new GrowthManager(settings.jungleLowerLeft, settings.jungleUpperRight);
         this.map = new WorldMap(settings.upperRight, growthManager);
-        this.movementManager = new MovementManager(map, 1);
-        this.eatingManager = new EatingManager(map, 20, 20);
+        this.movementManager = new MovementManager(map, 5);
+        this.eatingManager = new EatingManager(map, 100, 200);
+        this.procreationManager = new ProcreationManager(map, 25, 100);
         this.buffer = buffer;
         this.days = settings.days;
 
         for (int i = 0; i < settings.animalsNumber; i++){
-            map.placeAnimal(new Animal(new Vector2D(random.nextInt(map.upperRight.x), random.nextInt(map.upperRight.y))));
+            Vector2D position = new Vector2D(random.nextInt(map.upperRight.x), random.nextInt(map.upperRight.y));
+            Animal animal = new Animal(position, Direction.N, 200);
+            map.placeAnimal(animal);
+            animal.turnAroundAuto();
         }
     }
 
@@ -47,6 +54,7 @@ public class Simulation extends Thread {
         movementManager.performMovement();
         eatingManager.performEating();
         buffer.add(parseToJson());
+        procreationManager.performProcreation();
         growthManager.plantInSteppe();
         growthManager.plantInJungle();
         day++;
@@ -56,25 +64,22 @@ public class Simulation extends Thread {
     @Override
     public void run() {
         super.run();
-        simulate(1000);
+        simulate();
     }
 
-    public void simulate(int animalsNumber) {
-        prepareSimulation(animalsNumber);
+    public void simulate() {
         buffer.add(parseToJson());
         for (int i = 0; i < days; i++){
             simulateOneDay();
         }
     }
 
-    private void prepareSimulation(int animalsNumber){
-        for (int i = 0; i < animalsNumber; i++){
-            map.placeAnimal(new Animal(new Vector2D(random.nextInt(map.upperRight.x), random.nextInt(map.upperRight.y))));
-        }
-    }
 
     private String parseToJson(){
-        JSON json = new JSON(map.getFields(), day);
+        int animals = map.getFields().stream()
+                .map(field -> field.getAnimals().size())
+                .reduce(0, Integer::sum);
+        JSON json = new JSON(map.getFields(), day, animals);
         return gson.toJson(json);
     }
 }

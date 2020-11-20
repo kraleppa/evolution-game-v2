@@ -33,10 +33,8 @@ public class MyWebSocketServer extends WebSocketServer {
 
     @Override
     public void onMessage(WebSocket webSocket, String message) {
-        System.out.println("Message from client: " + message);
         Settings settings = gson.fromJson(message, Settings.class);
         new Sender(webSocket, settings).start();
-        System.out.println(sockets.size());
     }
 
     @Override

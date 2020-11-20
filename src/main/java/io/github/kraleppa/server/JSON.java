@@ -11,9 +11,12 @@ public class JSON {
     public final Collection<Field> fields;
     @Expose
     public final int day;
+    @Expose
+    public final int animals;
 
-    public JSON(Collection<Field> fields, int day) {
+    public JSON(Collection<Field> fields, int day, int animals) {
         this.fields = fields;
         this.day = day;
+        this.animals = animals;
     }
 }

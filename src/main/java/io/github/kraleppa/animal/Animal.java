@@ -11,9 +11,9 @@ public class Animal implements Comparable<Animal>{
     public Vector2D position;
     @Expose
     public Direction direction;
-    private final Genotype genotype;
+    public final Genotype genotype;
     @Expose
-    private int energy;
+    public int energy;
     private WorldMap map;
 
     public Animal(Vector2D position, Direction direction, Genotype genotype, int energy){
@@ -22,6 +22,11 @@ public class Animal implements Comparable<Animal>{
         this.genotype = genotype;
         this.energy = energy;
     }
+
+    public Animal(Vector2D position, Direction direction, int energy){
+        this(position, direction, new Genotype(), energy);
+    }
+
 
     public Animal(Vector2D position, Direction direction){
         this(position, direction, new Genotype(), 10);
@@ -58,7 +63,7 @@ public class Animal implements Comparable<Animal>{
 
     public void turnAroundAuto(){
         //TODO
-        turnAround(new Random().nextInt(10));
+        turnAround(genotype.getRandomGene());
     }
 
     public void eat(int energy, int maximumEnergy){

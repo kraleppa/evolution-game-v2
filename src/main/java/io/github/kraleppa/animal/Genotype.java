@@ -41,5 +41,9 @@ public class Genotype {
         Collections.sort(genotype);
     }
 
+    public int getRandomGene(){
+        return genotype.get(random.nextInt(32));
+    }
+
 
 }

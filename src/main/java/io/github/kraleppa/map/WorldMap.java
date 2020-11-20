@@ -30,6 +30,9 @@ public class WorldMap {
     }
 
     public Field getField(Vector2D position) {
+        if (!fields.containsKey(position)){
+            throw new IllegalArgumentException("Field does not exist!");
+        }
         return fields.get(position);
     }
 
