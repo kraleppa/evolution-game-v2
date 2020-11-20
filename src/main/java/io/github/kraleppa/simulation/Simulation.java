@@ -34,17 +34,20 @@ public class Simulation extends Thread {
 
 
     public Simulation(Buffer buffer, Settings settings) {
+        int movementCost = 2;       //2
+        int maxEnergy = 120;        //120
+        int plantEnergy = 40;       //40
         this.growthManager = new GrowthManager(settings.jungleLowerLeft, settings.jungleUpperRight);
         this.map = new WorldMap(settings.upperRight, growthManager);
-        this.movementManager = new MovementManager(map, 5);
-        this.eatingManager = new EatingManager(map, 100, 200);
-        this.procreationManager = new ProcreationManager(map, 25, 100);
+        this.movementManager = new MovementManager(map, movementCost);
+        this.eatingManager = new EatingManager(map, plantEnergy, maxEnergy);
+        this.procreationManager = new ProcreationManager(map, maxEnergy / 4, maxEnergy/2);
         this.buffer = buffer;
         this.days = settings.days;
 
         for (int i = 0; i < settings.animalsNumber; i++){
             Vector2D position = new Vector2D(random.nextInt(map.upperRight.x), random.nextInt(map.upperRight.y));
-            Animal animal = new Animal(position, Direction.N, 200);
+            Animal animal = new Animal(position, Direction.N, maxEnergy/2);
             map.placeAnimal(animal);
             animal.turnAroundAuto();
         }

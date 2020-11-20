@@ -40,14 +40,32 @@ public class WorldMap {
         return fields.values();
     }
 
-    public boolean isPositionLegal(Vector2D position){
-        return position.precedes(upperRight) && position.follows(new Vector2D(-1, -1));
+    public Vector2D convertPosition(Vector2D position){
+        int nx;
+        int ny;
+
+        if (position.x < 0){
+            nx = upperRight.x - 1;
+        }
+        else if (position.x >= upperRight.x){
+            nx = 0;
+        } else {
+            nx = position.x;
+        }
+
+        if (position.y < 0){
+            ny = upperRight.y - 1;
+        }
+        else if (position.y >= upperRight.y){
+            ny = 0;
+        } else {
+            ny = position.y;
+        }
+
+        return new Vector2D(nx, ny);
     }
 
     public void placeAnimal(Animal animal){
-        if (!isPositionLegal(animal.position)){
-            throw new IllegalArgumentException("Wrong entity position!");
-        }
         animal.bindMap(this);
         Field field = fields.get(animal.position);
         field.addAnimal(animal);
@@ -55,9 +73,6 @@ public class WorldMap {
     }
 
     public void removeAnimal(Animal animal){
-        if (!isPositionLegal(animal.position)){
-            throw new IllegalArgumentException("Wrong entity position!");
-        }
         Field field = fields.get(animal.position);
         field.removeAnimal(animal);
         growthManager.addIfEmpty(field);

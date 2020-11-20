@@ -44,13 +44,13 @@ public class Animal implements Comparable<Animal>{
             return false;
         }
 
-        Vector2D newPosition = position.add(direction.toVector2D());
-        if (map.isPositionLegal(newPosition)){
-            map.removeAnimal(this);
-            position = newPosition;
-            map.placeAnimal(this);
-            energy -= energyCost;
-        }
+        Vector2D newPosition = map.convertPosition(position.add(direction.toVector2D()));
+
+        map.removeAnimal(this);
+        position = newPosition;
+        map.placeAnimal(this);
+        energy -= energyCost;
+
 
         return true;
     }
