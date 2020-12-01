@@ -34,6 +34,7 @@ public class MyWebSocketServer extends WebSocketServer {
     @Override
     public void onMessage(WebSocket webSocket, String message) {
         Settings settings = gson.fromJson(message, Settings.class);
+        System.out.println(settings);
         new Sender(webSocket, settings).start();
     }
 

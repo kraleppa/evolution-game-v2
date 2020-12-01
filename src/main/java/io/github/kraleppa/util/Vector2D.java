@@ -3,9 +3,11 @@ package io.github.kraleppa.util;
 import com.google.gson.annotations.Expose;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @AllArgsConstructor
 @EqualsAndHashCode
+@ToString
 public class Vector2D {
     @Expose
     final public int x;
@@ -39,4 +41,6 @@ public class Vector2D {
     public Vector2D opposite(){
         return new Vector2D((-1) * this.x, (-1) * this.y);
     }
+
+
 }

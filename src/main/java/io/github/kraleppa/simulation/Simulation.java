@@ -15,7 +15,6 @@ import io.github.kraleppa.server.Settings;
 import io.github.kraleppa.util.Vector2D;
 
 import java.util.Random;
-import java.util.Set;
 
 public class Simulation extends Thread {
     private final Random random = new Random();
@@ -34,9 +33,9 @@ public class Simulation extends Thread {
 
 
     public Simulation(Buffer buffer, Settings settings) {
-        int movementCost = 2;       //2
-        int maxEnergy = 120;        //120
-        int plantEnergy = 40;       //40
+        int movementCost = settings.movementCost;
+        int maxEnergy = settings.maxEnergy;
+        int plantEnergy = settings.plantEnergy;       //40
         this.growthManager = new GrowthManager(settings.jungleLowerLeft, settings.jungleUpperRight);
         this.map = new WorldMap(settings.upperRight, growthManager);
         this.movementManager = new MovementManager(map, movementCost);

@@ -7,10 +7,12 @@ import org.java_websocket.WebSocket;
 public class Sender extends Thread {
     private final WebSocket webSocket;
     private final Buffer buffer;
+    private final int time;
 
     public Sender(WebSocket webSocket, Settings settings) {
         this.webSocket = webSocket;
         this.buffer = new Buffer();
+        this.time = settings.time;
         new Simulation(buffer, settings).start();
     }
 
@@ -26,7 +28,7 @@ public class Sender extends Thread {
             }
             webSocket.send(s);
             try {
-                Thread.sleep(30);
+                Thread.sleep(time);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
